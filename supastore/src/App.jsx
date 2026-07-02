@@ -1,5 +1,6 @@
 import {Routes,Route} from 'router'
 import { HomePage } from './Pages/HomePage'
+import { CheckoutPage } from './Pages/CheckoutPage'
 
 import './App.css'
 
