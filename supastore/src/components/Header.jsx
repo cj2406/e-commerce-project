@@ -1,5 +1,5 @@
-import {Link} from 'router'
-import "./header.css";
+import {Link} from 'react-router'
+import './header.css';
 
 export function Header() {
   return (
