@@ -1,11 +1,12 @@
-import {Link} from 'react-router'
-import './header.css';
+import { Link } from "react-router";
+import "./header.css";
 
-export function Header({cart}) {
-  let totalQuantity=0;
-  cart.forEach(cartItem => {
-    totalQuantity+=cartItem.quantity;
-  });
+export function Header({ cart }) {
+  let totalQuantity = 0;
+  cart.forEach((product)=>{
+    totalQuantity+=product.quantity
+  })
+
   return (
     <>
       <div className="header">
