@@ -26,8 +26,8 @@ export function OrdersPage({ cart }) {
 
         {orders.map((order) => {
           return (
-            <>
-              <div key={order.id} className="order-container">
+            <Fragment key={order.id}>
+              <div  className="order-container">
                 <div className="order-header">
                   <div className="order-header-left-section">
                     <div className="order-date">
@@ -74,7 +74,7 @@ export function OrdersPage({ cart }) {
                         </div>
 
                         <div className="product-actions">
-                          <Link to="/tracking">
+                          <Link to={`/tracking/${order.id}/${orderProduct.productId}`}>
                             <button className="track-package-button button-secondary">
                               Track package
                             </button>
@@ -85,7 +85,7 @@ export function OrdersPage({ cart }) {
                   })}
                 </div>
               </div>
-            </>
+            </Fragment>
           );
         })}
       </div>
