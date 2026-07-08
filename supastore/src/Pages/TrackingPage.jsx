@@ -17,6 +17,7 @@ export function TrackingPage({ cart }) {
       const response = await axios.get(
         `/api/orders/${orderId}?expand=products`,
       );
+      console.log(response.data);
 
       setOrder(response.data);
 
@@ -33,6 +34,17 @@ export function TrackingPage({ cart }) {
   if (!order || !product) {
     return null;
   }
+  const totalDeliveryTime = product.estimatedDeliveryTimeMs - order.orderTimeMs;
+
+  const elapsedTime = Date.now() - order.orderTimeMs;
+  console.log(order.orderTimeMs);
+  console.log(elapsedTime);
+  console.log(totalDeliveryTime);
+
+  const progressPercentage = Math.min(
+    Math.max((elapsedTime / totalDeliveryTime) * 100, 0),
+    100,
+  );
   return (
     <>
       <Header cart={cart} />
@@ -50,7 +62,7 @@ export function TrackingPage({ cart }) {
 
           <div className="product-info">{product.product.name}</div>
 
-          <div className="product-info">Quantity: 1</div>
+          <div className="product-info">Quantity: {product.quantity}</div>
 
           <img className="product-image" src={product.product.image} />
 
@@ -61,7 +73,10 @@ export function TrackingPage({ cart }) {
           </div>
 
           <div className="progress-bar-container">
-            <div className="progress-bar"></div>
+            <div
+              className="progress-bar"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
           </div>
         </div>
       </div>
