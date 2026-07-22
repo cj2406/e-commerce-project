@@ -11,3 +11,4 @@ describe("FormatMoney", () => {
     expect(formatMoney(100)).toBe("1.00");
   });
 });
+

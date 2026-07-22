@@ -1,0 +1,71 @@
+Good, that's a real target. Here's a full MVP map for people stuck in tutorial hell trying to prove (to themselves and others) they can actually build things.
+Core value proposition (keep this pinned above every decision)
+"Take a practical, auto-graded challenge in a real skill area, and walk away with proof — for yourself and for employers — that you can actually build, not just follow along."
+
+MVP Feature Set
+1. Practical Skill Tracks (2–3 to start)
+Pick narrow, high-demand tracks where tutorial-hell is most common — e.g. "REST APIs," "Frontend/JS fundamentals," "SQL & databases." Not "Web Development" as one blob — specific enough that a result means something.
+2. Auto-graded Practical Assessments
+The core mechanic. Not multiple choice trivia — tasks like "here's a broken endpoint, fix it," "write a query that returns X," "implement this function to pass these tests." Graded by running code against test cases / expected output, not manual review.
+3. Skill Profile / Results Report
+Instead of one score: a breakdown per sub-skill ("Solid: routing, validation. Weak: auth, error handling"). This is the artifact users actually want — something concrete to point to, and something that tells them what to fix next.
+4. Practice Mode vs. Verified Attempt
+Unlimited untimed practice per track (low-pressure, matches your "not too competitive" instinct), plus one official timed/verified attempt that generates the shareable result. Keeps pressure optional, not default.
+5. Basic Account + History
+Signup, track progress over time, revisit past results.
+Explicitly out of scope for MVP (as discussed): custom test creation, importing external tests, sharing/social features, timed steeplechase mode. Revisit after the core loop is validated.
+
+Functional Requirements
+Auth & Accounts
+
+FR1: User can sign up / log in (email+password, or OAuth — pick one, don't build both for MVP).
+FR2: User can view/edit basic profile info.
+
+Assessments
+
+FR3: User can browse available skill tracks and see a description of what each covers.
+FR4: User can start a practice attempt (untimed, unlimited retries) for any track.
+FR5: User can start one official verified attempt per track (timed, single-take, generates a result).
+FR6: System presents practical tasks (code-completion, bug-fix, query-writing, etc.) with a defined correct-output spec.
+FR7: System auto-grades submissions by executing code/queries against hidden test cases and comparing output.
+FR8: User receives pass/fail + partial-credit detail per task immediately after submission (practice mode) or after the attempt completes (verified mode).
+
+Results
+
+FR9: System generates a skill-breakdown report per completed verified attempt (sub-skill level, not just overall score).
+FR10: User can view history of past attempts and track improvement over time.
+FR11: User can download or view a shareable summary of a verified result (link or exportable snapshot — full sharing features like public profiles are v2, but the artifact itself should exist since "proof to show employers" is the whole point).
+
+Admin/Content (internal, not user-facing yet)
+
+FR12: Admin/internal team can add/edit tasks and test cases per track (since user-generated content is deferred, someone has to author the initial task bank).
+
+
+Non-Functional Requirements
+Security
+
+NFR1: Code execution must run in a sandboxed, isolated environment (containerized, resource/time-limited) — this is non-negotiable since you're literally running arbitrary user code.
+NFR2: Passwords hashed (bcrypt/argon2), standard auth security practices (rate limiting on login, etc.).
+
+Performance
+
+NFR3: Code grading feedback should return within a few seconds for a typical task (users in "practice mode" will abandon if grading feels slow).
+NFR4: Platform should handle concurrent grading requests without one user's execution blocking another's (queue-based execution if needed).
+
+Reliability
+
+NFR5: Grading must be deterministic — same submission should always produce same result (flaky test cases will destroy trust immediately, given your whole premise is "verification").
+
+Usability
+
+NFR6: Task instructions must be unambiguous with visible example input/output — since these are auto-graded, unclear specs are worse here than in a human-reviewed test.
+NFR7: Low-pressure framing in UI copy/design for practice mode (progress-oriented, not scoreboard-oriented) to match your explicit "not too competitive" goal.
+
+Scalability (light touch for MVP, don't over-build)
+
+NFR8: Architecture should allow adding new tracks/tasks without code changes (data-driven task definitions), since you'll want to expand tracks post-MVP without a rebuild.
+
+Compliance/Data
+
+NFR9: Basic data privacy handling (clear data retention/deletion, no unnecessary PII collection) — even pre-institutional-sale, this saves pain later.
+
